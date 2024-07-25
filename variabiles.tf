@@ -4,7 +4,7 @@ variable "ssh_public_key_path" {
   default     = "C:\\Users\\Eugen\\.ssh\\mtcazurekey.pub"
 
 
-  
+
 }
 
 variable "ssh_private_key_path" {

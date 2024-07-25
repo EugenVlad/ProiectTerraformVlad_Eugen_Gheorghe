@@ -5,7 +5,7 @@ terraform {
       version = "=2.91.0"
     }
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
       version = "~> 3.1"
     }
   }
@@ -113,9 +113,9 @@ resource "azurerm_subnet_network_security_group_association" "mtc-sga" {
   network_security_group_id = azurerm_network_security_group.mtc-sg.id
 }
 
-resource "azurerm_public_ip" "mtc-ip"{
+resource "azurerm_public_ip" "mtc-ip" {
   count               = 2
-  name                =  "mtc-ip-${count.index + 1}"
+  name                = "mtc-ip-${count.index + 1}"
   resource_group_name = azurerm_resource_group.mtc-rg.name
   location            = azurerm_resource_group.mtc-rg.location
   allocation_method   = "Dynamic"
@@ -125,7 +125,7 @@ resource "azurerm_public_ip" "mtc-ip"{
   }
 }
 
-resource "azurerm_network_interface" "mtc-nic"{
+resource "azurerm_network_interface" "mtc-nic" {
   count               = 2
   name                = "mtc-nic-${count.index + 1}"
   location            = azurerm_resource_group.mtc-rg.location
@@ -135,7 +135,7 @@ resource "azurerm_network_interface" "mtc-nic"{
     name                          = "internal"
     subnet_id                     = azurerm_subnet.mtc-subnet.id
     private_ip_address_allocation = "Dynamic"
-    public_ip_address_id          =  azurerm_public_ip.mtc-ip[count.index].id
+    public_ip_address_id          = azurerm_public_ip.mtc-ip[count.index].id
   }
 
   tags = {
@@ -143,12 +143,12 @@ resource "azurerm_network_interface" "mtc-nic"{
   }
 }
 
- resource "random_password" "vm_password"{
-   length = 16
-   special = true
- }
+resource "random_password" "vm_password" {
+  length  = 16
+  special = true
+}
 
-resource "azurerm_linux_virtual_machine" "mtc-vm"{
+resource "azurerm_linux_virtual_machine" "mtc-vm" {
   count                 = 2
   name                  = "mtc-vm-${count.index + 1}"
   resource_group_name   = azurerm_resource_group.mtc-rg.name
